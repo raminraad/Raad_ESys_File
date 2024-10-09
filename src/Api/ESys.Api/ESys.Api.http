@@ -1,0 +1,6 @@
+@ESys.Api_HostAddress = http://localhost:5111
+
+GET {{ESys.Api_HostAddress}}/api/
+Accept: application/json
+
+###

@@ -1,0 +1,19 @@
+[
+  {
+    "bizid": { "val": "112" },
+    "len": { "val": "10" },
+    "wid": { "val": "10" },
+    "lay": { "val": "2" },
+    "qty": { "val": "5" },
+    "thick": { "val": "1.2" },
+    "surfish": { "val": "hasl" },
+    "copthick": { "val": "1oz" },
+    "mat": { "val": "fr4" },
+    "solcol": { "val": "green" },
+    "silcol": { "val": "white" },
+    "type": { "val": "reg" },
+    "__res__price": { "val": "" },
+    "__res__delivery": { "val": "" },
+    "files": { "val": "undefined" }
+  }
+]
