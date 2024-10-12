@@ -25,11 +25,6 @@ public class DynaExp
     private string xmlTable = "dbo.tblBizXmls";
     private string bizTable = "dbo.tblBiz";
 
-    private void rextest()
-    {
-
-    }
-
     private bool LoadBizFromDB(string bizID)
     {
 
@@ -122,6 +117,11 @@ public class DynaExp
         }
     }
 
+    private void rextest()
+    {
+
+    }
+
     private string queryBuilder(Dictionary<string, string> lookupStr, string xmlTitles, string xmlTags, string whereClause)
     {
 
@@ -176,6 +176,7 @@ public class DynaExp
 
         return query;
     }
+
     private void LookupHandle(string lookupStr)
     {
 

@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
+using ESys.Application.Contracts.Libraries;
 using ESys.Application.Contracts.Persistence;
 using ESys.Domain.Entities;
 using MediatR;
@@ -12,6 +13,8 @@ namespace ESys.Application.Features.CalcForm.Queries.GetCalcFormInitialData;
 public class GetCalcFormInitialDataQueryHandler : IRequestHandler<GetCalcFormInitialDataQuery, CalcFormInitialDataVm>
 {
     IBizRepository _bizRepository;
+    private readonly IJsonHelper _jsonHelper;
+    private readonly IExpHelper _expHelper;
     private const string connectionString = "Server=DESKTOP-OGLQH4M;Database=GlobalBizBuilder;User Id=sa;Password=1;Integrated Security=true;TrustServerCertificate=True;";
     private readonly IConfiguration _configuration;
 
@@ -28,10 +31,12 @@ public class GetCalcFormInitialDataQueryHandler : IRequestHandler<GetCalcFormIni
     private string xmlTable = "dbo.tblBizXmls";
 
 
-    public GetCalcFormInitialDataQueryHandler(IBizRepository bizRepository, IConfiguration configuration)
+    public GetCalcFormInitialDataQueryHandler(IBizRepository bizRepository,IJsonHelper jsonHelper,IExpHelper expHelper, IConfiguration configuration)
     {
         _configuration = configuration;
         _bizRepository = bizRepository;
+        _jsonHelper = jsonHelper;
+        _expHelper = expHelper;
         //todo: set connection string from config
     }
 
@@ -75,20 +80,12 @@ public class GetCalcFormInitialDataQueryHandler : IRequestHandler<GetCalcFormIni
 
         return new CalcFormInitialDataVm()
         {
-            Result = execExps()
+            Result = _jsonHelper.ConvertKeyValuePairsToJson(_expHelper.MergeExpAndData(dataPool, expPool))
         };
         //return expTest(dataMap, ExpStr);
 
         // return "Calc Function not implemented yet!!";
     }
-
-
-
-    private void rextest()
-    {
-
-    }
-
 
     private void RequestDBforXML(Dictionary<string, string> lookupStr)
     {
@@ -275,7 +272,7 @@ public class GetCalcFormInitialDataQueryHandler : IRequestHandler<GetCalcFormIni
     /// <returns>Dictionary<key:string, value:string></returns>
     public void FuncHandle(string funcStr)
     {
-        var pairs = new Dictionary<string, string>();
+        var keyValuePairs = new Dictionary<string, string>();
 
 
         Expression expression = new Expression();
@@ -305,45 +302,19 @@ public class GetCalcFormInitialDataQueryHandler : IRequestHandler<GetCalcFormIni
 
                     expression.SetFomular(new string((string)param.Value["exp"]).Replace("\\\"", "\""));
 
-                    pairs.Add(param.Key, expression.Eval().ToString());
+                    keyValuePairs.Add(param.Key, expression.Eval().ToString());
                     break;
                 }
                 else
                 {
-                    pairs.Add(param.Key, (string)param.Value["val"]);
+                    keyValuePairs.Add(param.Key, (string)param.Value["val"]);
                 }
 
             }
         }
-        execJson(jsonBuild(pairs));
+        execJson(_jsonHelper.ConvertKeyValuePairsToJson(keyValuePairs));
     }
 
-    private string jsonBuild(Dictionary<string, string> pairs)
-    {
-        string json = "[{";
-
-        var first = true;
-
-        foreach (var item in pairs)
-        {
-            if (first)
-            {
-                json = json + "\"" + item.Key + "\":{\"val\":\"" + item.Value + "\"}";
-                first = false;
-            }
-            else
-            {
-                json = json + ",\"" + item.Key + "\":{\"val\":\"" + item.Value + "\"}";
-            }
-
-        }
-
-        json = json + "}]";
-
-
-
-        return json;
-    }
     private void execJson(string json)
     {
         Tokenize(DynaCalcByExp(json).Result);
@@ -428,37 +399,7 @@ public class GetCalcFormInitialDataQueryHandler : IRequestHandler<GetCalcFormIni
             FuncHandle(item.Value);
         }
     }
-    private string execExps()
-    {
-        Dictionary<string, string> result = new Dictionary<string, string>();
-
-        Expression expression = new Expression();
-
-        foreach (var item in dataPool)
-        {
-            try
-            {
-                expression.Bind(item.Key, Convert.ToDouble(item.Value));
-            }
-            catch (Exception)
-            {
-                expression.Bind(item.Key, item.Value);
-                //throw;
-            }
-
-        }
-
-        foreach (var exp in expPool)
-        {
-            expression.SetFomular(exp.Value);
-            Object value = expression.Eval();
-            result.Add(exp.Key, value.ToString());
-        }
-
-        return jsonBuild(result);
-
-    }
-
+    
     private double? GetNumber(string v)
     {
         throw new NotImplementedException();
