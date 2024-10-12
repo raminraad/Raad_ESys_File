@@ -1,4 +1,7 @@
 using ESys.Persistence;
+using FastEndpoints;
+using MediatR;
+using ESys.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,12 +30,18 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddControllers();
+builder.Services.AddFastEndpoints();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var configuration = new ConfigurationBuilder().Build();
 builder.Services.AddPersistenceServices(configuration);
+
+
+// Add MediatR services
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
@@ -41,14 +50,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("Open");
+}
+else
+{
+    app.UseCors("ESysCorsPolicy");
 }
 
 app.UseHttpsRedirection();
 app.UseHsts();
-app.UseCors("ESysCorsPolicy");
+
+
 
 app.UseAuthorization();
-
+app.UseFastEndpoints();
 app.MapControllers();
 
 app.Run();

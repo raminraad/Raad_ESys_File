@@ -1,26 +1,26 @@
-using ESys.Api.TempForRevision;
 using ESys.Application.Contracts.Persistence;
-using ESys.Application.Features;
-using ESys.Application.Models;
+using ESys.Application.Features.CalcForm.Queries.GetCalcFormInitialData;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 public class CalcController : Controller
 {
     private readonly IExpressionRepository _expressionRepository;
-    private readonly CalculationFormInitiator _calculationFormInitiator;
-    public CalcController(IExpressionRepository expressionRepository, CalculationFormInitiator calculationFormInitiator)
+    private readonly GetCalcFormInitialDataQueryHandler _calculationFormInitiator;
+    private readonly IMediator _mediator;
+    public CalcController(IExpressionRepository expressionRepository, GetCalcFormInitialDataQueryHandler calculationFormInitiator, IMediator mediator)
     {
+        _mediator = mediator;
         _calculationFormInitiator = calculationFormInitiator;
         _expressionRepository = expressionRepository;
     }
 
     [HttpPost]
     [Route("Dyna")]
-    public IActionResult GetCalculateFromInitializationValues(IEnumerable<CalculateFromInitializationRequest> requests)
+    public async Task<IActionResult> GetCalculateFromInitializationValues(GetCalcFormInitialDataQuery request)
     {
-        var requestJson = Newtonsoft.Json.JsonConvert.SerializeObject(requests);
-        var temp = _calculationFormInitiator.DynaCalcByExp(requestJson);
-        return Ok(temp);
+        var response = await _mediator.Send(request);
+        return Ok(response.Result);
     }
 }

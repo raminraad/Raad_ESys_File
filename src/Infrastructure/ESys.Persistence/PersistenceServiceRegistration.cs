@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using ESys.Application.Contracts.Persistence;
 using ESys.Persistence.Dapper.Repositories;
 using ESys.Application.Features;
+using ESys.Application.Features.CalcForm.Queries.GetCalcFormInitialData;
 
 namespace ESys.Persistence;
 
@@ -12,7 +13,7 @@ public static class PersistenceServiceRegistration
     {
         services.AddScoped<IBizRepository, BizRepository>();
         services.AddScoped<IExpressionRepository, ExpressionRepository>();
-        services.AddScoped<CalculationFormInitiator, CalculationFormInitiator>();
+        services.AddScoped<GetCalcFormInitialDataQueryHandler, GetCalcFormInitialDataQueryHandler>();
         return services;
     }
 
