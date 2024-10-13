@@ -2,13 +2,13 @@ using MediatR;
 
 namespace ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
 
-public class GetCalculatedBizFromQueryHandler(BizCalculator bizCalculator)
-    : IRequestHandler<GetCalculatedBizFromQuery, GetCalculatedBizFromVm>
+public class GetCalculatedBizFormQueryHandler(BizCalculator bizCalculator)
+    : IRequestHandler<GetCalculatedBizFormQuery, GetCalculatedBizFormVm>
 {
-    public Task<GetCalculatedBizFromVm> Handle(GetCalculatedBizFromQuery request,
+    public Task<GetCalculatedBizFormVm> Handle(GetCalculatedBizFormQuery request,
         CancellationToken cancellationToken)
     {
-        var result = new GetCalculatedBizFromVm()
+        var result = new GetCalculatedBizFormVm()
         {
             Result = bizCalculator.GetCalculatedBizForm(request.Body).Result
         };

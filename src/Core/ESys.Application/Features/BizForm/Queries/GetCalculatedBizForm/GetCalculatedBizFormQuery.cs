@@ -1,8 +1,10 @@
+using FastEndpoints;
 using MediatR;
 
 namespace ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
-public class GetCalculatedBizFromQuery : IRequest<GetCalculatedBizFromVm>
+public class GetCalculatedBizFormQuery : IRequest<GetCalculatedBizFormVm>
 {
     // Api request body as JSON
+    [FromBody]
     public string Body { set; get; } = string.Empty;
 }

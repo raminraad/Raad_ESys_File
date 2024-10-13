@@ -13,8 +13,16 @@ public class CalcController : Controller
     }
 
     [HttpPost]
-    [Route("Dyna")]
-    public async Task<IActionResult> GetCalculateFromInitializationValues(GetCalculatedBizFromQuery request)
+    [Route("dyna")]
+    public async Task<IActionResult> GetCalculatedBizForm([FromBody] GetCalculatedBizFormQuery request)
+    {
+        var response = await _mediator.Send(request);
+        return Ok(response.Result);
+    }
+    
+    [HttpGet]
+    [Route("dyna/{bizId}")]
+    public async Task<IActionResult> GetInitiatedBizForm(GetCalculatedBizFormQuery request)
     {
         var response = await _mediator.Send(request);
         return Ok(response.Result);

@@ -9,14 +9,13 @@ namespace ESys.Api.EndPoints
     /// <summary>
     /// End point for getting data needed for iniltializing Biz form
     /// </summary>
-    public class GetCalculatedBizFormEndPoint : Endpoint<GetCalculatedBizFromQuery, string>
+    public class GetCalculatedBizFormEndPoint : Endpoint<GetCalculatedBizFormQuery, string>
     {
         private readonly IMediator _mediator;
 
         public GetCalculatedBizFormEndPoint(IMediator mediator)
         {
             _mediator = mediator;
-
         }
         public override void Configure()
         {
@@ -24,7 +23,7 @@ namespace ESys.Api.EndPoints
             AllowAnonymous();
         }
 
-        public override async Task HandleAsync(GetCalculatedBizFromQuery req, CancellationToken ct)
+        public override async Task HandleAsync(GetCalculatedBizFormQuery req, CancellationToken ct)
         {
             var resp = await _mediator.Send(req,ct);
 
