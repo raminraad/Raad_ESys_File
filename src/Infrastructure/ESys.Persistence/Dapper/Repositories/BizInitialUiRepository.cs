@@ -7,48 +7,52 @@ using ESys.Persistence.Statics.SqlServerStatics;
 using Microsoft.Extensions.Configuration;
 
 namespace ESys.Persistence.Dapper.Repositories;
-public class ExpressionRepository : IExpressionRepository
+public class BizInitialUiRepository : IBizInitialUiRepository
 {
 
     private readonly IConfiguration _configuration;
     protected readonly string _connectionString = string.Empty;
 
-    public ExpressionRepository(IConfiguration configuration)
+    public BizInitialUiRepository(IConfiguration configuration)
     {
         _configuration = configuration;
         _connectionString = configuration.GetConnectionString("EsysSqlServerConnectionString") ?? throw new ArgumentNullException();
     }
-    public Task<Expression> AddAsync(Expression entity)
+    public async Task<BizInitialUi> AddAsync(BizInitialUi entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Expression entity)
+    public async Task DeleteAsync(BizInitialUi entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Expression> GetExpressionWithXmls(string ExpressionId)
+    public async Task<BizInitialUi> BizInitialUiressionWithXmls(string BizInitialUiressionId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Expression> GetByIdAsync(string id)
+    public async Task<BizInitialUi> GetByIdAsync(string id)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string queryStatement = "SELECT *  FROM " + SqlServerStatics.BizInitialUiTable + " WHERE BizId = '" + id + "'";
+            return await connection.QueryFirstAsync<BizInitialUi>(queryStatement);
+        }
+    }
+
+    public async Task<BizInitialUi> GetByIdAsync(BigInteger id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Expression> GetByIdAsync(BigInteger id)
+    public async Task UpdateAsync(BizInitialUi entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Expression entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IReadOnlyList<Expression>> ListAllAsync()
+    public async Task<IReadOnlyList<BizInitialUi>> ListAllAsync()
     {
         throw new NotImplementedException();
     }

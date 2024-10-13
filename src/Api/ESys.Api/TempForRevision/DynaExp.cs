@@ -584,7 +584,6 @@ public class DynaExp
         return false;
     }
 
-
     private void Tokenize(string data)
     {
 
@@ -598,4 +597,5 @@ public class DynaExp
             }
         }
     }
+    
 }

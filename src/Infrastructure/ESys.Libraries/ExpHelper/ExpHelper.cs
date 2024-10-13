@@ -1,7 +1,7 @@
 using ESys.Application.Contracts.Libraries;
 using org.matheval;
 
-namespace ESys.Libraries.Exp;
+namespace ESys.Libraries.ExpHelper;
 
 public class ExpHelper : IExpHelper
 {
@@ -20,7 +20,6 @@ public class ExpHelper : IExpHelper
             catch (Exception)
             {
                 expression.Bind(item.Key, item.Value);
-                //throw;
             }
 
         }

@@ -1,8 +1,6 @@
 ﻿using ESys.Application.Contracts.Libraries;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using ESys.Application.Contracts.Persistence;
-using ESys.Application.Features.CalcForm.Queries.GetCalcFormInitialData;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ESys.Libraries;
 

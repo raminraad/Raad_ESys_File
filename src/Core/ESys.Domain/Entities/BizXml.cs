@@ -1,7 +1,7 @@
 using System.Numerics;
 
 namespace ESys.Domain.Entities;
-public class BizXmls
+public class BizXml
 {
     public BigInteger Id { set; get; }
     public string BizId { set; get; } = string.Empty;

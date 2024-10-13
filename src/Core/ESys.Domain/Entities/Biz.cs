@@ -8,7 +8,7 @@ public class Biz
     public string Lookup { set; get; } = string.Empty;
     public int State { set; get; }
     public string Name { set; get; } = string.Empty;
-    public List<BizXmls> BizXmls { get; set; } = [];
-    public UI? UI { get; set; } = default;
+    public List<BizXml> BizXmls { get; set; } = [];
+    public BizInitialUi? UI { get; set; } = default;
 }
 

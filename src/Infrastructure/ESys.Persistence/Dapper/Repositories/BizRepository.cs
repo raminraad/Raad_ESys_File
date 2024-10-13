@@ -38,9 +38,13 @@ public class BizRepository : IBizRepository
         throw new NotImplementedException();
     }
 
-    public Task<Biz> GetByIdAsync(BigInteger id)
+    public async Task<Biz> GetByIdAsync(BigInteger id)
     {
-        throw new NotImplementedException();
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string queryStatement = "SELECT Exp, Func, lookup  FROM " + SqlServerStatics.BizTable + " WHERE BizId = '" + id + "'";//queryBuilder(lookupStr);
+            return await connection.QueryFirstAsync<Biz>(queryStatement);
+        }
     }
 
     public async Task<IReadOnlyList<Biz>> ListAllAsync()
@@ -48,17 +52,8 @@ public class BizRepository : IBizRepository
         using (var connection = new SqlConnection(_connectionString))
         {
             await connection.OpenAsync();
-            var Bizs = await connection.QueryAsync<Biz>($"SELECT * FROM {SqlServerStatics.bizTable}");
+            var Bizs = await connection.QueryAsync<Biz>($"SELECT * FROM {SqlServerStatics.BizTable}");
             return Bizs.ToList();
-        }
-    }
-
-    public Biz? LoadBizFromDB(string bizID)
-    {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string queryStatement = "SELECT Exp, Func, lookup  FROM " + SqlServerStatics.bizTable + " WHERE BizId = '" + bizID + "'";//queryBuilder(lookupStr);
-            return connection.QueryFirst<Biz>(queryStatement);
         }
     }
 
