@@ -1,6 +1,6 @@
 using ESys.Application.Contracts.Libraries;
 
-namespace ESys.Libraries.JsonHelper;
+namespace ESys.Libraries.Helpers;
 
 public class JsonHelper : IJsonHelper
 {

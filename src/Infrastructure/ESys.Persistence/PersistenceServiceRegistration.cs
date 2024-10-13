@@ -13,7 +13,7 @@ public static class PersistenceServiceRegistration
     {
         services.AddScoped<IBizRepository, BizRepository>();
         services.AddScoped<IBizInitialUiRepository, BizInitialUiRepository>();
-        services.AddScoped<GetCalculatedBizFromQueryHandler, GetCalculatedBizFromQueryHandler>();
+        services.AddScoped<IBizXmlRepository, BizXmlRepository>();
         return services;
     }
 

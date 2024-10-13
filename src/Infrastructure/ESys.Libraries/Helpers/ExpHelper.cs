@@ -1,7 +1,7 @@
 using ESys.Application.Contracts.Libraries;
 using org.matheval;
 
-namespace ESys.Libraries.ExpHelper;
+namespace ESys.Libraries.Helpers;
 
 public class ExpHelper : IExpHelper
 {
