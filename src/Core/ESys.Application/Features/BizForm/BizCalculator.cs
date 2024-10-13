@@ -1,15 +1,13 @@
 using System.Numerics;
 using ESys.Application.Contracts.Libraries;
 using ESys.Application.Contracts.Persistence;
-using ESys.Application.Features.BizCalcForm.Queries.GetCalculatedBizForm;
 using ESys.Domain.Entities;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using Expression = org.matheval.Expression;
 
 
-namespace ESys.Application.Features.CalcForm.Calculation;
+namespace ESys.Application.Features.BizForm;
 
 public class BizCalculator
 {

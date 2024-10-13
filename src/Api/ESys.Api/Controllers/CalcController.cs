@@ -1,5 +1,5 @@
 using ESys.Application.Contracts.Persistence;
-using ESys.Application.Features.BizCalcForm.Queries.GetCalculatedBizForm;
+using ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

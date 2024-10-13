@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using ESys.Application.Contracts.Persistence;
 using ESys.Persistence.Dapper.Repositories;
 using ESys.Application.Features;
-using ESys.Application.Features.BizCalcForm.Queries.GetCalculatedBizForm;
 
 namespace ESys.Persistence;
 

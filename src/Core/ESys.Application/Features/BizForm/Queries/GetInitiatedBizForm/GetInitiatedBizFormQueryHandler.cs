@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace ESys.Application.Features.BizCalcForm.Queries.GetInitiatedBizForm;
+namespace ESys.Application.Features.BizForm.Queries.GetInitiatedBizForm;
 
 public class GetInitiatedBizFormQueryHandler(BizInitiator bizInitiator)
     : IRequestHandler<GetInitiatedBizFormQuery, GetInitiatedBizFormVm>

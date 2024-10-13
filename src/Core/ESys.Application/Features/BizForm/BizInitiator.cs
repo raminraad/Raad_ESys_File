@@ -1,7 +1,6 @@
 using ESys.Application.Contracts.Persistence;
 
-
-namespace ESys.Application.Features.BizCalcForm;
+namespace ESys.Application.Features.BizForm;
 
 public class BizInitiator
 {

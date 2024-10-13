@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace ESys.Application.Features.BizCalcForm.Queries.GetCalculatedBizForm;
+namespace ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
 public class GetCalculatedBizFromQuery : IRequest<GetCalculatedBizFromVm>
 {
     // Api request body as JSON
