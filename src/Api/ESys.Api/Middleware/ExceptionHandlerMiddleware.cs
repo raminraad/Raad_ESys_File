@@ -4,6 +4,9 @@ using ESys.Application.Exceptions;
 
 namespace ESys.Api.Middleware;
 
+/// <summary>
+/// Middleware for handling custom exceptions in request pipeline
+/// </summary>
 public class ExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
@@ -25,6 +28,12 @@ public class ExceptionHandlerMiddleware
         }
     }
 
+    /// <summary>
+    /// Converts exception to corresponding result that can be sent to client
+    /// </summary>
+    /// <param name="context">Current HttpContext object received from pipeline</param>
+    /// <param name="exception">Occured exception to be handled</param>
+    /// <returns>Current HttpContext containing exception data and related status code</returns>
     private Task ConvertException(HttpContext context, Exception exception)
     {
         Exception? exc = exception is AggregateException ? exception.InnerException : exception;

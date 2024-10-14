@@ -6,6 +6,9 @@ using ESys.Application.Features.BizForm;
 
 namespace ESys.Application;
 
+/// <summary>
+/// Extension methods needed for adding application layer services
+/// </summary>
 public static class ApplicationServiceRegistration
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)

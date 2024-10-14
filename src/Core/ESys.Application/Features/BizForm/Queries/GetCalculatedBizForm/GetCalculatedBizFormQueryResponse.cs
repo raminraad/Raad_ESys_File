@@ -1,6 +1,6 @@
 namespace ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
 
-public class GetCalculatedBizFormResponse
+public class GetCalculatedBizFormQueryResponse
 {
     public string Result { get; set; } 
 }

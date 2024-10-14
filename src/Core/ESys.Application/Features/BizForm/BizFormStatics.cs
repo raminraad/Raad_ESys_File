@@ -1,5 +1,8 @@
 namespace ESys.Application.Features.BizForm;
 
+/// <summary>
+/// Contains static values needed for BizForm initialization and reevaluation
+/// </summary>
 public static class BizFormStatics
 {
     public static readonly string ExpTag = "exp";

@@ -26,4 +26,11 @@
     <ProjectReference Include="..\..\Infrastructure\ESys.Persistence\ESys.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="TempForRevision\InitialRequestTemplate.json" />
+    <_ContentIncludedByDefault Remove="TempForRevision\InitialResponseTemplate.json" />
+    <_ContentIncludedByDefault Remove="TempForRevision\RequestTemplate.json" />
+    <_ContentIncludedByDefault Remove="TempForRevision\ResponseTemplate.json" />
+  </ItemGroup>
+
 </Project>

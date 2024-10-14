@@ -5,7 +5,9 @@ using ESys.Persistence.Dapper.Repositories;
 using ESys.Application.Features;
 
 namespace ESys.Persistence;
-
+/// <summary>
+/// Extension methods needed for adding persistence layer services
+/// </summary>
 public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)

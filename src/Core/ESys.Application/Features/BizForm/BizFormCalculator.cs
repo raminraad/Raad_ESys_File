@@ -33,6 +33,12 @@ public class BizFormCalculator
         _expHelper = expHelper;
     }
 
+    /// <summary>
+    /// Calculates data needed for BizForm reevaluation
+    /// </summary>
+    /// <param name="requestBody">A Json string containing BizForm data needed for calculation</param>
+    /// <returns>A Json string containing calculated data for updating BizForm</returns>
+    /// <exception cref="KeyNotFoundException">Occurs when received BizId in requestBody does not exist in database</exception>
     public async Task<string> GetCalculatedBizForm(string requestBody)
     {
         // Q?
@@ -58,7 +64,11 @@ public class BizFormCalculator
         var result = _jsonHelper.ConvertKeyValuePairsToJson(_expHelper.ApplyExpsOnData(dataPool, expPool));
         return result;
     }
-
+    
+    /// <summary>
+    /// Iterates over lookup pool and data pool, then fetches BizXml from repository and applies lookups on data
+    /// </summary>
+    /// <param name="lookupStr">A string containing lookup values</param>
     private void ApplyLookups(string lookupStr)
     {
         var lookupDic = new Dictionary<string, string>();
@@ -83,15 +93,15 @@ public class BizFormCalculator
                     lookupDic.Add(param.Key, expression.Eval().ToString());
                 }
                 catch
-                {
-                    // ignored
+                { 
+                    // Ignore the occured error and get back to the rest of array
                 }
 
-                break; // This break is for preventing duplication
+                break; // This break is for preventing duplication in inner loop
             }
 
             lookupDic.Add(param.Key, (string)param.Value["val"]);
-            break; // This break is for preventing duplication
+            break; // This break is for preventing duplication in outer loop
         }
 
         var xmlData = _bizXmlRepository.GetBizXmlAsDictionary(_biz, lookupDic);
@@ -147,6 +157,10 @@ public class BizFormCalculator
         FillJsonInDataPool(GetCalculatedBizForm(_jsonHelper.ConvertKeyValuePairsToJson(keyValuePairs)).Result);
     }
 
+    /// <summary>
+    /// Iterates over Exp property of Biz and fills the items in exp pool
+    /// </summary>
+    /// <param name="biz">Corresponding Biz</param>
     private void AddExpsToDataPool(Biz biz)
     {
         foreach (JObject root in JArray.Parse(biz.Exp))
@@ -154,6 +168,10 @@ public class BizFormCalculator
             expPool.Add(param.Key, (string)param.Value[BizFormStatics.ExpTag]);
     }
 
+    /// <summary>
+    /// Iterates over Func property of Biz and fills the items in func pool
+    /// </summary>
+    /// <param name="biz">Corresponding Biz</param>
     private void AddFuncsToDataPool(Biz biz)
     {
         try
@@ -170,6 +188,10 @@ public class BizFormCalculator
         }
     }
 
+    /// <summary>
+    /// Iterates over Lookup property of Biz and fills the items in lookup pool
+    /// </summary>
+    /// <param name="biz">Corresponding Biz</param>
     private void AddLookupsToDataPool(Biz biz)
     {
         if (string.IsNullOrEmpty(_biz.Lookup)) return;
@@ -179,6 +201,10 @@ public class BizFormCalculator
             lookupPool.Add(param.Key, (string)param.Value[BizFormStatics.LookupTag]);
     }
 
+    /// <summary>
+    /// Iterates over Json file and fills in data pool
+    /// </summary>
+    /// <param name="jsonData">A Json string containing key-value pairs</param>
     private void FillJsonInDataPool(string jsonData)
     {
         foreach (JObject root in JArray.Parse(jsonData))

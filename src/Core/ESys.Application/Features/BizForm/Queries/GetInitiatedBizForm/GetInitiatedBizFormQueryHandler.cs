@@ -3,12 +3,12 @@ using MediatR;
 namespace ESys.Application.Features.BizForm.Queries.GetInitiatedBizForm;
 
 public class GetInitiatedBizFormQueryHandler(BizFormInitiator bizFormInitiator)
-    : IRequestHandler<GetInitiatedBizFormQuery, GetInitiatedBizFormResponse>
+    : IRequestHandler<GetInitiatedBizFormQuery, GetInitiatedBizFormQueryResponse>
 {
-    public Task<GetInitiatedBizFormResponse> Handle(GetInitiatedBizFormQuery request,
+    public Task<GetInitiatedBizFormQueryResponse> Handle(GetInitiatedBizFormQuery request,
         CancellationToken cancellationToken)
     {
-        var result = new GetInitiatedBizFormResponse()
+        var result = new GetInitiatedBizFormQueryResponse()
         {
             Result = bizFormInitiator.GetInitialBizForm(request.BizId).Result
         };
