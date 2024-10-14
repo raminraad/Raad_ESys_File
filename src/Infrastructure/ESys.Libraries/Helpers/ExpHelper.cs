@@ -18,36 +18,27 @@ public class ExpHelper : IExpHelper
     public Dictionary<string, string> ApplyExpsOnData(Dictionary<string, string> dataPool,
         Dictionary<string, string> expPool)
     {
-        Dictionary<string, string> result = new Dictionary<string, string>();
+        Dictionary<string, string> result = new();
 
-        Expression expression = new Expression();
+        var expression = new Expression();
 
         foreach (var item in dataPool)
-        {
-            // todo: find a better approach
-            try
-            {
-                expression.Bind(item.Key, Convert.ToDouble(item.Value));
-            }
-            catch (Exception)
-            {
+            if (double.TryParse(item.Value, out double d) && !Double.IsNaN(d) && !Double.IsInfinity(d))
+                expression.Bind(item.Key, d);
+            else
                 expression.Bind(item.Key, item.Value);
-            }
-        }
 
         foreach (var exp in expPool)
-        {
             try
             {
                 expression.SetFomular(exp.Value);
-                Object value = expression.Eval();
+                var value = expression.Eval();
                 result.Add(exp.Key, value.ToString());
             }
             catch (Exception e)
             {
                 throw new ArithmeticException($"Exp with key:{exp.Key} and val:{exp.Value} could not be evaluated.");
             }
-        }
 
         return result;
     }
