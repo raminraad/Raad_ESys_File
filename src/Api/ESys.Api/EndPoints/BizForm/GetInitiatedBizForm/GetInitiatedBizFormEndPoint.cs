@@ -5,7 +5,6 @@ using MediatR;
 
 namespace ESys.Api.EndPoints.BizForm.GetInitiatedBizForm
 {
-    // todo: Replace string result with Dto
     /// <summary>
     /// End point for getting data needed for BizFrom initialization
     /// </summary>

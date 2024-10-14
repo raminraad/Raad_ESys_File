@@ -3,7 +3,7 @@ using System.Numerics;
 using Dapper;
 using ESys.Application.Contracts.Persistence;
 using ESys.Domain.Entities;
-using ESys.Persistence.Statics.SqlServerStatics;
+using ESys.Persistence.Static;
 using Microsoft.Extensions.Configuration;
 
 namespace ESys.Persistence.Dapper.Repositories;
