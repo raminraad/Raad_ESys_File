@@ -31,12 +31,6 @@ namespace ESys.Api.EndPoints.BizForm.GetCalculatedBizForm
             {
                 
                 string serializeObject = JsonSerializer.Serialize(req);
-                // var serializeObject = JsonConvert.SerializeObject(req, Formatting.None,
-                //     new JsonSerializerSettings()
-                //     { 
-                //         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                //         DefaultValueHandling = DefaultValueHandling.Ignore
-                //     });
 
                 var mediatorReq = new GetCalculatedBizFormQuery { Body = serializeObject };
 

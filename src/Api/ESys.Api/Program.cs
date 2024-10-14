@@ -28,8 +28,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-builder.Services.AddControllers();
+builder.Services.AddAuthorization();
 builder.Services.AddFastEndpoints();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -66,6 +65,5 @@ app.UseFastEndpoints(c =>
 {
     c.Endpoints.RoutePrefix = "api";
 });
-app.MapControllers();
 
 app.Run();
