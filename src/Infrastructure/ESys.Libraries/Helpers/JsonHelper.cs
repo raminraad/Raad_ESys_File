@@ -2,8 +2,16 @@ using ESys.Application.Contracts.Libraries;
 
 namespace ESys.Libraries.Helpers;
 
+/// <summary>
+/// Service provider for Json contents
+/// </summary>
 public class JsonHelper : IJsonHelper
 {
+    /// <summary>
+    /// Converts a given key-value collection to a Json string
+    /// </summary>
+    /// <param name="keyValPairs"></param>
+    /// <returns>Json string containing kel-value collection data</returns>
     public string ConvertKeyValuePairsToJson(Dictionary<string, string> keyValPairs)
     {
         string json = "[{";
