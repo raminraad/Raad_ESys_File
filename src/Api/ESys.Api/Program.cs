@@ -1,6 +1,6 @@
 using ESys.Persistence;
 using FastEndpoints;
-using MediatR;
+using Scalar.AspNetCore;
 using ESys.Application;
 using ESys.Libraries;
 
@@ -28,6 +28,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+
 builder.Services.AddAuthorization();
 builder.Services.AddFastEndpoints();
 
@@ -47,8 +48,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "openapi/{documentName}.json";
+    });
+    app.MapScalarApiReference();
+
+
     app.UseCors("Open");
 }
 else
