@@ -1,6 +1,7 @@
 using System.Numerics;
 using ESys.Application.Contracts.Libraries;
 using ESys.Application.Contracts.Persistence;
+using ESys.Application.Exceptions;
 using ESys.Domain.Entities;
 using Newtonsoft.Json.Linq;
 using Expression = org.matheval.Expression;
@@ -155,11 +156,18 @@ public class BizFormCalculator
 
     private void AddFuncsToDataPool(Biz biz)
     {
-        if (string.IsNullOrEmpty(biz.Func)) return;
+        try
+        {
+            if (string.IsNullOrEmpty(biz.Func)) return;
         
-        foreach (JObject root in JArray.Parse(biz.Func))
-        foreach (KeyValuePair<string, JToken> param in root)
-            funcPool.Add(param.Key, (string)param.Value[BizFormStatics.FuncTag]);
+            foreach (JObject root in JArray.Parse(biz.Func))
+            foreach (KeyValuePair<string, JToken> param in root)
+                funcPool.Add(param.Key, param.Value[BizFormStatics.FuncTag].ToString());
+        }
+        catch (Exception e)
+        {
+            throw new BadRequestException(e.Message);
+        }
     }
 
     private void AddLookupsToDataPool(Biz biz)

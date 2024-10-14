@@ -24,7 +24,12 @@ namespace ESys.Api.EndPoints.BizForm.GetCalculatedBizForm
             Routes("/dyna");
             AllowAnonymous();
         }
-
+        
+        /// <summary>
+        /// Handles BizForm reevaluation via mediator
+        /// </summary>
+        /// <param name="req">List of Json objects containing data needed for recalculation</param>
+        /// <param name="ct">Cancellation token</param>
         public override async Task HandleAsync(List<JsonObject> req, CancellationToken ct)
         {
             try

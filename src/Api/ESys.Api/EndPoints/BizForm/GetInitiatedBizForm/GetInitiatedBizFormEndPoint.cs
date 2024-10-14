@@ -7,7 +7,7 @@ namespace ESys.Api.EndPoints.BizForm.GetInitiatedBizForm
 {
     // todo: Replace string result with Dto
     /// <summary>
-    /// End point for getting data needed for iniltializing Biz form
+    /// End point for getting data needed for BizFrom initialization
     /// </summary>
     public class GetInitiatedBizFormEndPoint : Endpoint<GetInitiatedBizFormQuery, string>
     {
@@ -23,13 +23,18 @@ namespace ESys.Api.EndPoints.BizForm.GetInitiatedBizForm
             AllowAnonymous();
         }
 
+        /// <summary>
+        /// Handles BizForm initialization via mediator 
+        /// </summary>
+        /// <param name="req">Request containing BizId needed for BizForm initialization</param>
+        /// <param name="ct">Cancellation token</param>
         public override async Task HandleAsync(GetInitiatedBizFormQuery req, CancellationToken ct)
         {
             try
             {
                 var resp = await _mediator.Send(req,ct);
 
-                await SendStringAsync(resp.Result);
+                await SendStringAsync(resp.Result, cancellation: ct);
             }
             catch (NotFoundException e)
             {
