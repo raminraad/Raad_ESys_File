@@ -16,10 +16,6 @@ public class BizCalculator
     private readonly IExpHelper _expHelper;
 
     private readonly IBizXmlRepository _bizXmlRepository;
-
-    private const string EXP = "exp";
-    private const string LOOKUP = "lookup";
-    private const string FUNC = "func";
     
     //Q? what is Exp for?
     private string Exp = @"len,*,wid,*,qty,*,qty";
@@ -183,7 +179,7 @@ public class BizCalculator
         {
             foreach (KeyValuePair<string, JToken> param in root)
             {
-                expPool.Add(param.Key, (string)param.Value[EXP]);
+                expPool.Add(param.Key, (string)param.Value[BizFormStatics.ExpTag]);
             }
         }
     }
@@ -203,7 +199,7 @@ public class BizCalculator
             // Console.WriteLine(root);
             foreach (KeyValuePair<string, JToken> param in root)
             {
-                funcPool.Add(param.Key, (string)param.Value[FUNC]);
+                funcPool.Add(param.Key, (string)param.Value[BizFormStatics.FuncTag]);
             }
         }
     }
@@ -220,13 +216,10 @@ public class BizCalculator
         {
             foreach (KeyValuePair<string, JToken> param in root)
             {
-                lookupPool.Add(param.Key, (string)param.Value[LOOKUP]);
+                lookupPool.Add(param.Key, (string)param.Value[BizFormStatics.LookupTag]);
             }
         }
     }
-    //lookupPool on return:
-    // "[pcbrate, [{'table':{'val':'jlcpcb2'}},{'layer':{'val':'xxx','exp':'lay'}},{'area':{'val':'20','exp':'len*wid*qty'}}]]",pcbrate,"[{'table':{'val':'jlcpcb2'}},{'layer':{'val':'xxx','exp':'lay'}},{'area':{'val':'20','exp':'len*wid*qty'}}]"
-    // "[statics, [{'table':{'val':'settings'}}]]",statics,[{'table':{'val':'settings'}}]
 
     private void execLookups()
     {
