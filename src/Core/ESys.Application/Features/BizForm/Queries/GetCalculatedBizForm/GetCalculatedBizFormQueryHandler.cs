@@ -2,7 +2,7 @@ using MediatR;
 
 namespace ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
 
-public class GetCalculatedBizFormQueryHandler(BizCalculator bizCalculator)
+public class GetCalculatedBizFormQueryHandler(BizFormCalculator bizFormCalculator)
     : IRequestHandler<GetCalculatedBizFormQuery, GetCalculatedBizFormResponse>
 {
     public Task<GetCalculatedBizFormResponse> Handle(GetCalculatedBizFormQuery request,
@@ -10,7 +10,7 @@ public class GetCalculatedBizFormQueryHandler(BizCalculator bizCalculator)
     {
         var result = new GetCalculatedBizFormResponse()
         {
-            Result = bizCalculator.GetCalculatedBizForm(request.Body).Result
+            Result = bizFormCalculator.GetCalculatedBizForm(request.Body).Result
         };
         return Task.FromResult(result);
     }

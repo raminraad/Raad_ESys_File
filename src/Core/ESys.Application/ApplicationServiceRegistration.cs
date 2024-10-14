@@ -12,8 +12,8 @@ public static class ApplicationServiceRegistration
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-        services.AddScoped<BizCalculator>();
-        services.AddScoped<BizInitiator>();
+        services.AddScoped<BizFormCalculator>();
+        services.AddScoped<BizFormInitiator>();
 
         return services;
     }
