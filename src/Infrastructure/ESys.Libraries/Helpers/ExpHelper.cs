@@ -3,8 +3,18 @@ using org.matheval;
 
 namespace ESys.Libraries.Helpers;
 
+/// <summary>
+/// Includes services related to Exps
+/// </summary>
 public class ExpHelper : IExpHelper
 {
+    /// <summary>
+    /// Iterates over given Exps and applies them on a given data pool
+    /// </summary>
+    /// <param name="dataPool">Data pool to apply Exps on</param>
+    /// <param name="expPool">Exps to apply on data pool</param>
+    /// <returns>A dictionary containing result data</returns>
+    /// <exception cref="ArithmeticException">Occurs when an Exp is not applicable on data</exception>
     public Dictionary<string, string> ApplyExpsOnData(Dictionary<string, string> dataPool,
         Dictionary<string, string> expPool)
     {
