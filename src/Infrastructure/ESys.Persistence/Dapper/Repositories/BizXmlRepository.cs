@@ -91,15 +91,13 @@ public class BizXmlRepository : IBizXmlRepository
         throw new NotImplementedException();
     }
 
-
     public Dictionary<string, string> GetBizXmlAsDictionary(Biz biz, Dictionary<string, string> lookupStr)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-        BizXml bizXml;
-            string tableQuery = "SELECT xmlTitles, xmlTags, xmlColCount, whereClause FROM " +
-                                SqlServerStatics.XmlTable + " WHERE BizId = '" + biz.BizId + "' and tname = '" +
-                                lookupStr["table"] + "'"; //queryBuilder(lookupStr);
+            BizXml bizXml;
+            string tableQuery =
+                $"SELECT * FROM {SqlServerStatics.XmlTable} WHERE BizId = '{biz.BizId}' and tname = '{lookupStr["table"]}'"; 
             bizXml = connection.QueryFirst<BizXml>(tableQuery);
 
             // This line was in original code. Ask what it is for.
@@ -120,19 +118,11 @@ public class BizXmlRepository : IBizXmlRepository
         }
     }
 
-
     public string GenerateQueryForLookup(Dictionary<string, string> lookupDic, BizXml bizXml)
     {
-        string query = @"SELECT * FROM ( SELECT" +
-                       bizXml.XmlTitles + " FROM(select * FROM " +
-                       SqlServerStatics.XmlTable +
-                       " WHERE BizId = '" +
-                       bizXml.BizId +
-                       "' AND tname = '" +
-                       lookupDic["table"] +
-                       "') e OUTER APPLY e.xml.nodes('" +
-                       bizXml.XmlTags +
-                       "') as X(Y) )T ";
+        string query = @"SELECT * FROM ( SELECT" + bizXml.XmlTitles + " FROM(select * FROM " +
+                       SqlServerStatics.XmlTable + " WHERE BizId = '" + bizXml.BizId + "' AND tname = '" +
+                       lookupDic["table"] + "') e OUTER APPLY e.xml.nodes('" + bizXml.XmlTags + "') as X(Y) )T ";
 
         lookupDic.Remove("table");
 

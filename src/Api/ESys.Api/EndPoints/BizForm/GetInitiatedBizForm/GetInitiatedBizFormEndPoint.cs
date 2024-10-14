@@ -1,29 +1,29 @@
-using ESys.Application.Features.BizForm.Queries.GetCalculatedBizForm;
 using ESys.Application.Features.BizForm.Queries.GetInitiatedBizForm;
 using FastEndpoints;
 using MediatR;
 
-namespace ESys.Api.EndPoints
+namespace ESys.Api.EndPoints.BizForm.GetInitiatedBizForm
 {
     // todo: Replace string result with Dto
     /// <summary>
     /// End point for getting data needed for iniltializing Biz form
     /// </summary>
-    public class GetCalculatedBizFormEndPoint : Endpoint<GetCalculatedBizFormQuery, string>
+    public class GetInitiatedBizFormEndPoint : Endpoint<GetInitiatedBizFormQuery, string>
     {
         private readonly IMediator _mediator;
 
-        public GetCalculatedBizFormEndPoint(IMediator mediator)
+        public GetInitiatedBizFormEndPoint(IMediator mediator)
         {
             _mediator = mediator;
+
         }
         public override void Configure()
         {
-            Post("/api/dyna");
+            Get("/dyna/{BizId}");
             AllowAnonymous();
         }
 
-        public override async Task HandleAsync(GetCalculatedBizFormQuery req, CancellationToken ct)
+        public override async Task HandleAsync(GetInitiatedBizFormQuery req, CancellationToken ct)
         {
             var resp = await _mediator.Send(req,ct);
 

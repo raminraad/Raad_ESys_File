@@ -1,6 +1,6 @@
 namespace ESys.Application.Features.BizForm.Queries.GetInitiatedBizForm;
 
-public class GetInitiatedBizFormVm
+public class GetInitiatedBizFormResponse
 {
     public string Result { get; set; } = string.Empty;
 }

@@ -45,13 +45,15 @@ public class BizCalculator
     // input data sample :      [{"bizid":{"val":"112"},"len":{"val":"10"},"wid":{"val":"20"},"lay":{"val":"2"},"qty":{"val":"5"},"thick":{"val":"1.6"},"surfish":{"val":"hasl"},"copthick":{"val":"1oz"},"mat":{"val":"fr4"},"solcol":{"val":"green"},"silcol":{"val":"white"},"type":{"val":"reg"},"__res__price":{"val":""},"__res__delivery":{"val":""},"files":{"val":"undefined"}}]        
     public async Task<string> GetCalculatedBizForm(string requestBody)
     {
-        var requestJson = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
+        //this is duplicate
+        // var requestJson = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
         
         // todo: make calculation from string exp and data then return the calculated values.
     
-        Tokenize(requestJson);
+        
+        Tokenize(requestBody);
 
-        var biz = await _bizRepository.GetByIdAsync(BigInteger.Parse(dataPool["BizId"]));
+        var biz = await _bizRepository.GetByIdAsync(BigInteger.Parse(dataPool["bizid"]));
         if (biz != null)
             _biz = biz;
         else
@@ -65,7 +67,7 @@ public class BizCalculator
         execLookups();
         execFuncs();
 
-        var result = _jsonHelper.ConvertKeyValuePairsToJson(_expHelper.MergeExpAndData(dataPool, expPool));
+        var result = _jsonHelper.ConvertKeyValuePairsToJson(_expHelper.ApplyExpsOnData(dataPool, expPool));
         return result;
 
         // return "Calc Function not implemented yet!!";

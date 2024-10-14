@@ -62,7 +62,10 @@ app.UseHsts();
 
 
 app.UseAuthorization();
-app.UseFastEndpoints();
+app.UseFastEndpoints(c =>
+{
+    c.Endpoints.RoutePrefix = "api";
+});
 app.MapControllers();
 
 app.Run();

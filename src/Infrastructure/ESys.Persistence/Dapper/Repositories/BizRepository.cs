@@ -35,14 +35,15 @@ public class BizRepository : IBizRepository
 
     public Task<Biz> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        var idAsBigInteger = BigInteger.Parse(id);
+        return GetByIdAsync(idAsBigInteger);
     }
 
     public async Task<Biz> GetByIdAsync(BigInteger id)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string queryStatement = "SELECT Exp, Func, lookup  FROM " + SqlServerStatics.BizTable + " WHERE BizId = '" + id + "'";//queryBuilder(lookupStr);
+            string queryStatement = $"SELECT *  FROM {SqlServerStatics.BizTable} WHERE BizId = '{id}'";
             return await connection.QueryFirstAsync<Biz>(queryStatement);
         }
     }

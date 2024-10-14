@@ -5,7 +5,8 @@ namespace ESys.Libraries.Helpers;
 
 public class ExpHelper : IExpHelper
 {
-    public Dictionary<string,string> MergeExpAndData(Dictionary<string,string> dataPool,Dictionary<string,string> expPool)
+    public Dictionary<string, string> ApplyExpsOnData(Dictionary<string, string> dataPool,
+        Dictionary<string, string> expPool)
     {
         Dictionary<string, string> result = new Dictionary<string, string>();
 
@@ -13,6 +14,7 @@ public class ExpHelper : IExpHelper
 
         foreach (var item in dataPool)
         {
+            // todo: find a better approach
             try
             {
                 expression.Bind(item.Key, Convert.ToDouble(item.Value));
@@ -21,17 +23,22 @@ public class ExpHelper : IExpHelper
             {
                 expression.Bind(item.Key, item.Value);
             }
-
         }
 
         foreach (var exp in expPool)
         {
-            expression.SetFomular(exp.Value);
-            Object value = expression.Eval();
-            result.Add(exp.Key, value.ToString());
+            try
+            {
+                expression.SetFomular(exp.Value);
+                Object value = expression.Eval();
+                result.Add(exp.Key, value.ToString());
+            }
+            catch (Exception e)
+            {
+                throw new ArithmeticException($"Exp with key:{exp.Key} and val:{exp.Value} could not be evaluated.");
+            }
         }
 
         return result;
     }
-
 }
