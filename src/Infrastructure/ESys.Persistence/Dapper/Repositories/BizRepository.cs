@@ -43,8 +43,8 @@ public class BizRepository : IBizRepository
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string queryStatement = $"SELECT *  FROM {SqlServerStatics.BizTable} WHERE BizId = '{id}'";
-            return await connection.QueryFirstAsync<Biz>(queryStatement);
+            string queryStatement = $"SELECT TOP 1 *  FROM {SqlServerStatics.BizTable} WHERE BizId = '{id}'";
+            return await connection.QueryFirstOrDefaultAsync<Biz>(queryStatement);
         }
     }
 

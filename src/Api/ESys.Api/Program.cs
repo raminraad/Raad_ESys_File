@@ -1,3 +1,4 @@
+using ESys.Api.Middleware;
 using ESys.Persistence;
 using FastEndpoints;
 using Scalar.AspNetCore;
@@ -63,6 +64,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseCustomExceptionHandler();
 app.UseHsts();
 
 

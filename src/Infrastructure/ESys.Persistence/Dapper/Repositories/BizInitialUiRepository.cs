@@ -37,8 +37,8 @@ public class BizInitialUiRepository : IBizInitialUiRepository
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string queryStatement = "SELECT *  FROM " + SqlServerStatics.BizInitialUiTable + " WHERE BizId = '" + id + "'";
-            return await connection.QueryFirstAsync<BizInitialUi>(queryStatement);
+            string queryStatement = "SELECT TOP 1 *  FROM " + SqlServerStatics.BizInitialUiTable + " WHERE BizId = '" + id + "'";
+            return await connection.QueryFirstOrDefaultAsync<BizInitialUi>(queryStatement);
         }
     }
 

@@ -95,12 +95,12 @@ public class BizXmlRepository : IBizXmlRepository
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            BizXml bizXml;
+            BizXml? bizXml;
             string tableQuery =
                 $"SELECT * FROM {SqlServerStatics.XmlTable} WHERE BizId = '{biz.BizId}' and tname = '{lookupStr["table"]}'"; 
-            bizXml = connection.QueryFirst<BizXml>(tableQuery);
+            bizXml = connection.QueryFirstOrDefault<BizXml>(tableQuery);
 
-            // This line was in original code. Ask what it is for.
+            //Q? This line was in original code. Ask what it is for.
             //string xmlColCount = "1";
 
             string innerQuery = GenerateQueryForLookup(lookupStr, bizXml);

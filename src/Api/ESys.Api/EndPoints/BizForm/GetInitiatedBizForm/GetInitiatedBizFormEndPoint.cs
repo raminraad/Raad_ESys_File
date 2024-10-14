@@ -1,3 +1,4 @@
+using ESys.Application.Exceptions;
 using ESys.Application.Features.BizForm.Queries.GetInitiatedBizForm;
 using FastEndpoints;
 using MediatR;
@@ -15,7 +16,6 @@ namespace ESys.Api.EndPoints.BizForm.GetInitiatedBizForm
         public GetInitiatedBizFormEndPoint(IMediator mediator)
         {
             _mediator = mediator;
-
         }
         public override void Configure()
         {
@@ -25,9 +25,16 @@ namespace ESys.Api.EndPoints.BizForm.GetInitiatedBizForm
 
         public override async Task HandleAsync(GetInitiatedBizFormQuery req, CancellationToken ct)
         {
-            var resp = await _mediator.Send(req,ct);
+            try
+            {
+                var resp = await _mediator.Send(req,ct);
 
-            await SendStringAsync(resp.Result);
+                await SendStringAsync(resp.Result);
+            }
+            catch (NotFoundException e)
+            {
+                await SendNotFoundAsync(ct);
+            }
         }
 
     }
