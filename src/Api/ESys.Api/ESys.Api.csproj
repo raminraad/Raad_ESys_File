@@ -32,8 +32,4 @@
     <_ContentIncludedByDefault Remove="TempForRevision\ResponseTemplate.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Uploads\" />
-  </ItemGroup>
-
 </Project>

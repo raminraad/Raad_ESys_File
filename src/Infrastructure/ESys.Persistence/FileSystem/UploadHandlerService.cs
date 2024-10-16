@@ -48,22 +48,23 @@ public class UploadHandlerService : IUploadHandlerService
 
         //name changing
         var fileExtension = Path.GetExtension(file.FileName);
-        var fileNewName = Guid.NewGuid().ToString() + fileExtension;
         var path = Path.Combine(Directory.GetCurrentDirectory(),
             _uploadHandlerConfig.UploadRootDirectory, _uploadHandlerConfig.UploadChildDirectory);
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-        using var stream = new FileStream(Path.Combine(path, fileNewName), FileMode.Create);
-        file.CopyTo(stream);
-        return fileNewName;
-    }
-
-    public string Upload(IEnumerable<IFormFile> files)
-    {
-        foreach (var file in files)
+        var fileNewName = file.FileName;
+        while (File.Exists(Path.Combine(path, fileNewName + fileExtension)))
         {
-            Upload(file);
+            fileNewName += "_";
         }
 
-        return "Uploads succeeded.";
+        using var stream = new FileStream(Path.Combine(path, fileNewName), FileMode.Create);
+        file.CopyTo(stream);
+        return Path.Combine(path, fileNewName);
+    }
+
+    public IEnumerable<string> Upload(IEnumerable<IFormFile> files)
+    {
+        foreach (var file in files)
+            yield return Upload(file);
     }
 }

@@ -6,6 +6,6 @@ public interface IUploadHandlerService
 {
     UploadHandlerConfig UploadHandlerConfig { set; get; }
     string Upload(IFormFile file);
-    string Upload(IEnumerable<IFormFile> files);
+    IEnumerable<string> Upload(IEnumerable<IFormFile> files);
 
 }

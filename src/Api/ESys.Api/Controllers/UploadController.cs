@@ -24,7 +24,7 @@ public class UploadController : ControllerBase
     {
         try
         {
-            _uploadHandlerService.UploadHandlerConfig.UploadChildDirectory = $"Biz";
+            _uploadHandlerService.UploadHandlerConfig.UploadChildDirectory = $"Biz\\{bizId}\\{orderId}";
             return Ok(_uploadHandlerService.Upload(file));
         }
         catch (Exception e)
@@ -39,7 +39,7 @@ public class UploadController : ControllerBase
     {
         try
         {
-            _uploadHandlerService.UploadHandlerConfig.UploadChildDirectory = $"Biz";
+            _uploadHandlerService.UploadHandlerConfig.UploadChildDirectory = $"Biz\\{bizId}\\{orderId}";
             return Ok(_uploadHandlerService.Upload(files));
         }
         catch (Exception e)
