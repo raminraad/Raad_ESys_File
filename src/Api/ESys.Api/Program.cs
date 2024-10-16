@@ -3,7 +3,6 @@ using ESys.Persistence;
 using FastEndpoints;
 using Scalar.AspNetCore;
 using ESys.Application;
-using ESys.Libraries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,17 +30,19 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddAuthorization();
-builder.Services.AddFastEndpoints();
+// builder.Services.AddFastEndpoints();
+builder.Services.AddControllers();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 
 // Add related projects' services
 var configuration = new ConfigurationBuilder().Build();
 builder.Services.AddPersistenceServices(configuration)
-    .AddLibrariesServices()
     .AddApplicationServices();
 
 var app = builder.Build();
@@ -49,8 +50,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(options => { options.RouteTemplate = "openapi/{documentName}.json"; });
-    app.MapScalarApiReference();
+    // app.UseSwagger(options => { options.RouteTemplate = "openapi/{documentName}.json"; });
+    // app.MapScalarApiReference();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
 
     app.UseCors("ESysCorsPolicy");
 }
@@ -61,9 +66,11 @@ app.UseHsts();
 
 
 app.UseAuthorization();
-app.UseFastEndpoints(c =>
-{
-    c.Endpoints.RoutePrefix = "api";
-});
+// app.UseFastEndpoints(c =>
+// {
+//     c.Endpoints.RoutePrefix = "api";
+// });
+app.MapControllers();
+
 
 app.Run();

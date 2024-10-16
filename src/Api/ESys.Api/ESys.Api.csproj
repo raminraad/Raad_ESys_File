@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\ESys.Domain\ESys.Domain.csproj" />
     <ProjectReference Include="..\..\Core\ESys.Application\ESys.Application.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\ESys.Libraries\ESys.Libraries.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ESys.Persistence\ESys.Persistence.csproj" />
   </ItemGroup>
 
@@ -31,6 +30,10 @@
     <_ContentIncludedByDefault Remove="TempForRevision\InitialResponseTemplate.json" />
     <_ContentIncludedByDefault Remove="TempForRevision\RequestTemplate.json" />
     <_ContentIncludedByDefault Remove="TempForRevision\ResponseTemplate.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Uploads\" />
   </ItemGroup>
 
 </Project>
