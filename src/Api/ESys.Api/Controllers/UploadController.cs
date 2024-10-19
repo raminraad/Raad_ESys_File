@@ -25,7 +25,7 @@ public class UploadController : ControllerBase
         try
         {
             _uploadHandlerService.UploadHandlerConfig.UploadChildDirectory = $"Biz\\{bizId}\\{orderId}";
-            return Ok(_uploadHandlerService.Upload(file));
+            return Ok(new{dxsfile=_uploadHandlerService.Upload(file)});
         }
         catch (Exception e)
         {

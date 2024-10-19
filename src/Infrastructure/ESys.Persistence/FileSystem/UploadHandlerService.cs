@@ -51,15 +51,15 @@ public class UploadHandlerService : IUploadHandlerService
         var path = Path.Combine(Directory.GetCurrentDirectory(),
             _uploadHandlerConfig.UploadRootDirectory, _uploadHandlerConfig.UploadChildDirectory);
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-        var fileNewName = file.FileName;
+        var fileNewName = file.FileName.Remove(file.FileName.Length - fileExtension.Length);
         while (File.Exists(Path.Combine(path, fileNewName + fileExtension)))
         {
             fileNewName += "_";
         }
 
-        using var stream = new FileStream(Path.Combine(path, fileNewName), FileMode.Create);
+        using var stream = new FileStream(Path.Combine(path, fileNewName + fileExtension), FileMode.Create);
         file.CopyTo(stream);
-        return Path.Combine(path, fileNewName);
+        return fileNewName + fileExtension;
     }
 
     public IEnumerable<string> Upload(IEnumerable<IFormFile> files)
